@@ -4,7 +4,6 @@
 int count = 0;
 int segundos = 0;
 int boton_presionado = 0;
-
 int state = 0;      /*  0: Estado 0 (inicial) - LDPV y LDPD encendidas y LDVD y LDPP apagadas
                         1: Estado 1 - LDPV parpadeando, LDPD encendida y LDVD y LDPP apagadas
                         2: Estado 2 - LDVD y LDPD encendidas y LDPV y LDPP apagadas
@@ -24,9 +23,9 @@ int main()
 
     // Configuracion timers
     TIMSK = 0x01;   // Habilitar comparacion con A
-    TCCR0A = 0x00;  // Configurar modo de operacion normal, sin PWM
+    TCCR0A = 0x02;  // Configurar modo de operacion normal, sin PWM
     TCCR0B = 0x05;   // Seleccionar frecuencia de reloj con prescaler de 1024 (frecuencia efectiva de 7812.5 Hz)
-    OCR0B = 0x4E;   // Se almacena el numero a comparar con el timer para generar la excepcion
+    OCR0A = 0x4E;   // Se almacena el numero a comparar con el timer para generar la excepcion 
     
     //  FSM del programa
     while (1)
@@ -55,6 +54,7 @@ int main()
                     {
                         state = 0;
                     }
+                    count = 0;
                     segundos = 0;
                 }
                 break;
@@ -80,6 +80,8 @@ int main()
                 else
                 {
                     state = 2;
+                    count = 0;
+                    segundos = 0;
                 }
                 break;
 
@@ -88,6 +90,8 @@ int main()
                 if (count == 100)   // Medir 1 segundo
                 {
                     state = 3;
+                    count = 0;
+                    segundos = 0;
                 }
                 else
                 {
@@ -104,8 +108,9 @@ int main()
                 }
                 if (segundos == 10)
                 {
-                    segundos = 0;
                     state = 4;
+                    count = 0;
+                    segundos = 0;
                 }                
                 break;
 
@@ -130,6 +135,8 @@ int main()
                 else
                 {
                     state = 5;
+                    count = 0;
+                    segundos = 0;
                 }
                 break;
             
@@ -139,13 +146,15 @@ int main()
                 if (count == 100)   // Medir 1 segundo
                 {
                     state = 0;
+                    count = 0;
+                    segundos = 0;
                 }
                 break;
         }        
     }
 }
 
-ISR(INT1_vect)
+ISR(INT1_vect)          // Interrupcion externa 1 - Ocurre al presionarse alguno de los botones
 {
     boton_presionado = 1;
 }
