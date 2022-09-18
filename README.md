@@ -11,9 +11,9 @@ Yenner Josué González Araya - B83375
 
 ## Circuito realizado
 El circuito es manejado por un microcontrolador ATtiny4313 y corresponde al esquemático a continuación:
-
+![alttext](https://github.com/yennergonzalez/Laboratorio_Microcontroladores_2/blob/main/Figuras_ReadMe/Captura_Circuito_Con_Medidores.png)
 
 
 ## Diagrama de temporización obtenido
 La secuencia de temporización obtenida para las señales corresponde a la propuesta en el enunciado y se muestra en la figura a continuación:
-
+![alttext](https://github.com/yennergonzalez/Laboratorio_Microcontroladores_2/blob/main/Figuras_ReadMe/Captura_Diagramas_Tiempo.png)
